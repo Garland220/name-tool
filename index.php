@@ -3,16 +3,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors','On');
 
-require_once('db.php');
+require_once('config.php');
 require_once('functions.php');
 
 $v = "v0.5a";
 $e = "";
 $n = "";
 
-//cleanWhiteSpace();
-//deleteDuplicates();
-dumpList();
+// cleanWhiteSpace();
+// deleteDuplicates();
+// dumpList();
 
 if (!empty($_GET['delete']))
 	deleteEntry($_GET['delete']);
@@ -35,8 +35,8 @@ if (!empty($_POST['Names'])) {
 
 	$e = insertName($names,$race,$female,$last,$contributor);
 }
-$n = mysql_query("SELECT * FROM names ORDER BY race,female,last_name,name");
-$c = mysql_fetch_object(mysql_query("SELECT COUNT(id) as count FROM names"));
+$n = mysqli_query($db, "SELECT * FROM names ORDER BY race,female,last_name,name");
+$c = mysqli_fetch_object(mysql_query($db, "SELECT COUNT(id) as count FROM names"));
 
 ?>
 
@@ -87,7 +87,7 @@ $c = mysql_fetch_object(mysql_query("SELECT COUNT(id) as count FROM names"));
 			if ($n != "")
 			{
 				print "Names submitted (<strong>$c->count</strong>):<br />\n<hr />";
-				while ($list = mysql_fetch_object($n))
+				while ($list = mysqli_fetch_object($n))
 				{
 					//print "<a href=\"?delete=$list->id\">[delete] - </a>";
 					print "<span class=\"";
